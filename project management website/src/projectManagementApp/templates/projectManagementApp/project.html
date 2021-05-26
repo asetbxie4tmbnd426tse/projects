@@ -1,0 +1,24 @@
+{% extends 'registration/userAuthorization.html' %}
+
+{% block title %}Projects{% endblock title %}
+
+{% block autorized_content %}
+    <h1>{{ project.name }}</h1>
+    <form method="post" action="#">
+        {% csrf_token %}
+        <h3>Tasks:</h3>
+        <ul>
+            {% for task in tasks %}
+                    
+                {% if task.complete  %}
+                    <li><input type="checkbox", value="clicked", name="t{{task.id}}" checked>{{task.title}}</li>
+                {% else %}
+                    <li><input type="checkbox", value="clicked", name="t{{task.id}}">{{task.title}}</li>
+                {% endif %}
+
+            {% endfor %}
+            <button type="submit", name="save", value="save">save</button>
+            <button type="submit", name="newTask", value="newTask">New Task</button>
+        </ul>
+    </form>
+{% endblock autorized_content %}

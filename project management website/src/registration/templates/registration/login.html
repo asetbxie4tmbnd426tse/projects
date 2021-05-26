@@ -1,0 +1,12 @@
+{% extends 'projectManagementApp/base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>Create account <a href="/register/signUp">here</a></p>
+    <button type="submit", name="loginButton">Login</button>
+</form>
+{% endblock content %}

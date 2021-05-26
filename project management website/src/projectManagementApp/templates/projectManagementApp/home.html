@@ -1,0 +1,23 @@
+{% extends 'projectManagementApp/base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <h1>Home Page</h1>
+    {% if user.is_authenticated %}
+        <h3>Hello</h3>
+        <p>This is a project management website.<br>
+           We belive an orgenized environment is a key value to success.<br>
+           In this enviroment you cn keep track on your projects and each of their tasks.
+           who completed them and when they were completed.
+        </p>
+    {% else %}
+        <h3>Hello</h3>
+        <p>This is a project management website.<br>
+           We belive an orgenized environment is a key value to success.<br>
+           In this enviroment you cn keep track on your projects and each of their tasks.
+           who completed them and when they were completed.<br>
+           Login <a href="/register/login">here</a>
+        </p>
+    {% endif %}
+{% endblock content %}

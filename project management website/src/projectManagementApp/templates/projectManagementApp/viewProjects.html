@@ -1,0 +1,12 @@
+{% extends 'registration/userAuthorization.html' %}
+
+{% block title %}Projects{% endblock title %}
+
+{% block autorized_content %}
+    <h3>Projects:</h3>
+    <ul>
+        {% for p in projects %}
+            <li><a href="/{{ p.name }}">{{ p.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock autorized_content %}

@@ -1,0 +1,12 @@
+{% extends 'registration/userAuthorization.html' %}
+
+{% block title %}Create New Project{% endblock title %}
+
+{% block autorized_content %}
+    Creat project Page
+    <form method="POST" actoin="/createProject/">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit", name="createProjectButton">Create</button>
+    </form>
+{% endblock autorized_content %}

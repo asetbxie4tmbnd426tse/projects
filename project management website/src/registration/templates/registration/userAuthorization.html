@@ -1,0 +1,10 @@
+{% extends 'projectManagementApp/base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% block autorized_content %}
+        {% endblock autorized_content %}
+    {% else %}
+        <p>Hey, you need to <a href="/register/login">login</a> befor entering this page</p>
+    {% endif %}
+{% endblock content %}

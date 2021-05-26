@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %}{% endblock title %} </title>
+    {% load static %}
+    <link rel="stylesheet" href={% static 'css/base.css' %}>
+</head>
+<body>
+    <div class="sidebar">
+        {% if user.is_authenticated %}
+            <a class="active" href="/">Home</a>   
+            <a href="/createProject">Create Project</a>
+            <a href="/view_projects">View Projects</a>
+            <a href="/register/logout">Logout</a>
+        {% else %}
+            <a class="active" href="/">Home</a> 
+            <a class="active" href="/register/login">Login</a>
+            <a href="/register/signUp">Sign Up</a>
+        {% endif %}
+    </div>
+
+    <div id="content", name="content", class="content">
+        {% block content %}   
+        {% endblock content %}
+    </div>
+</body>
+</html>
