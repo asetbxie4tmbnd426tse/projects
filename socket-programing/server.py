@@ -1,5 +1,4 @@
 import socket
-from modified_socket import Modified_Socket
 import threading
 
 HEADER = 64
@@ -17,34 +16,40 @@ lock = threading.Lock()
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
-#def _save_message(message):
-#    new_message.append(message)
-#    message_log.append(message)
-
-
 
 def _remove_client_from_list(addr):
-    for i in range(len(clients_list)):
-        if clients_list[i][addr] == addr:
-            del clients_list[i]
-            break
+    try:
+        for i in range(len(clients_list)):
+            if clients_list[i][addr] == addr:
+                del clients_list[i]
+                break
+    except:
+        pass
+def send_protocol(msg, conn):
+    message = msg.encode(FORMAT)
+    msg_length = len(message)
+    send_legth = str(msg_length).encode(FORMAT)
+    send_legth += b' ' * (HEADER - len(send_legth))
+    conn.send(send_legth)
+    conn.send(message)
 
-def message_log_to_new_client(conn):
-    lock.acquire()
-    for message in message_log:
-        conn.send(message.encode(FORMAT))
-
-    pass
-
-def send_to_all_clients(message, addr):
+def send_to_all_clients(message):
     #sends the message to all the connected clients 
     try:
         lock.acquire()
         for client in clients_list:
-            if client["addr"] != addr:
-                client["conn"].send(message.encode(FORMAT))
+                send_protocol(message, conn=client["conn"])
         lock.release()
     except IndexError:
+        pass
+        
+def message_log_to_new_client(conn):
+    try:
+        lock.acquire()
+        for message in message_log:
+            send_protocol(message, conn=conn)
+        lock.release()
+    except:
         pass
 
 def recive_protocol(conn, addr):
@@ -52,16 +57,16 @@ def recive_protocol(conn, addr):
     while connected:
         message_length = conn.recv(HEADER).decode(FORMAT)
         if message_length:
-            message_length = int(message)
+            message_length = int(message_length)
             message = conn.recv(message_length).decode(FORMAT)
             if message == DISCONNECT_MASSAGE:
                 connected = False
-            message_log_to_new_client(conn)
+            elif message == "Message received":
+                pass
             print(f"[{addr}] {message}")
             message_log.append(f"[{addr}] {message}")
             conn.send("Message received".encode(FORMAT))
-            send_to_all_clients(message=f"[{addr}] {message}", addr=addr)
-
+            send_to_all_clients(message=f"[{addr}] {message}")
 
 def handle_client(conn, addr):
     message = f"[NEW CONNECTION] {addr} connected."
@@ -70,8 +75,6 @@ def handle_client(conn, addr):
     recive_protocol(conn, addr)
     conn.close()
     _remove_client_from_list(addr)
-
-
 
 def start():
     # This is the main part of the server. The other functions should return here
