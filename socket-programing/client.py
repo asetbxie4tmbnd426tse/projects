@@ -28,7 +28,6 @@ def recive_protocol(connected):
             message_length = int(message_length)
             message = client.recv(message_length).decode(FORMAT)
             print(message)
-            client.send("Message received".encode(FORMAT))
 
 def handle_server(connected):
     recive_protocol(connected)
