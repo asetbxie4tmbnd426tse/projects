@@ -21,6 +21,8 @@ server.bind(ADDR)
 #    new_message.append(message)
 #    message_log.append(message)
 
+
+
 def _remove_client_from_list(addr):
     for i in range(len(clients_list)):
         if clients_list[i][addr] == addr:
@@ -45,10 +47,7 @@ def send_to_all_clients(message, addr):
     except IndexError:
         pass
 
-def handle_client(conn, addr):
-    message = f"[NEW CONNECTION] {addr} connected."
-    print(message)
-    message_log.append(message)
+def recive_protocol(conn, addr):
     connected = True
     while connected:
         message_length = conn.recv(HEADER).decode(FORMAT)
@@ -63,7 +62,12 @@ def handle_client(conn, addr):
             conn.send("Message received".encode(FORMAT))
             send_to_all_clients(message=f"[{addr}] {message}", addr=addr)
 
-    
+
+def handle_client(conn, addr):
+    message = f"[NEW CONNECTION] {addr} connected."
+    print(message)
+    message_log.append(message)
+    recive_protocol(conn, addr)
     conn.close()
     _remove_client_from_list(addr)
 
@@ -82,6 +86,7 @@ def start():
             "addr": addr,
         }
         clients_list.append(client_info)
+        message_log_to_new_client(conn)
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
