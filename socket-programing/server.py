@@ -65,7 +65,7 @@ def recive_protocol(conn, addr):
                 pass
             print(f"[{addr}] {message}")
             message_log.append(f"[{addr}] {message}")
-            conn.send("Message received".encode(FORMAT))
+            send_protocol("Message received")
             send_to_all_clients(message=f"[{addr}] {message}")
 
 def handle_client(conn, addr):

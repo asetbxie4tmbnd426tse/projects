@@ -8,7 +8,6 @@ DISCONNECT_MASSAGE = "!DISCONNECT"
 SERVER = "10.0.0.4"
 ADDR = (SERVER, PORT)
 
-connected = False
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
@@ -21,25 +20,24 @@ def send_protocol(msg):
     send_legth += b' ' * (HEADER - len(send_legth))
     client.send(send_legth)
     client.send(message)
-    print(client.recv(2048).decode(FORMAT))
 
-def recive_protocol():
+def recive_protocol(connected):
     while connected:
         message_length = client.recv(HEADER).decode(FORMAT)
         if message_length:
-            message_length = int(message)
+            message_length = int(message_length)
             message = client.recv(message_length).decode(FORMAT)
             print(message)
             client.send("Message received".encode(FORMAT))
 
-def handle_server():
-    recive_protocol()
+def handle_server(connected):
+    recive_protocol(connected)
     client.close()
     pass
 
 def start_client():
     connected = True
-    thread = threading.Thread(target=handle_server)
+    thread = threading.Thread(target=handle_server, args=(connected,))
     thread.start()
     while connected:
         message = input()
