@@ -30,3 +30,5 @@ class Task(models.Model):
         if self.description == None:
             return self.title
         return f"{self.title}: {self.description}" 
+
+    

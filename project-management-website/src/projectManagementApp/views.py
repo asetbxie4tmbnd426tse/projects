@@ -8,6 +8,7 @@ from .forms import CreateProjectForm, CreateTaskForm
 # Create your views here.
 
 def index(request, name):
+    
     if Project.objects.get(name=name).created_by_id == request.user.id:
         tasks = Task.objects.filter(task_of_project_id=name)
         if request.method == "POST":
@@ -23,12 +24,6 @@ def index(request, name):
 
             elif request.POST.get("newTask"):
                 return HttpResponseRedirect("/createTask/")
-            
-            else:
-                for task in tasks:
-                    if request.POST.get(f"deleteT{task.id}"):
-                        task.delete()
-                        return HttpResponseRedirect(f"/{name}")
     else:
         return HttpResponseRedirect("/view_projects/")
     context = {
@@ -66,8 +61,8 @@ def createTaskView(request):
         form = CreateTaskForm(request.POST)
         if form.is_valid():
             form.save()
-            project_name = Project.objects.get(name=form.cleaned_data["task_of_project"]).name
-            return HttpResponseRedirect(f"/{project_name}") 
+            projectId = Project.objects.get(name=form.cleaned_data["task_of_project"]).id
+            return HttpResponseRedirect(f"/{projectId}") 
     else:
         form = CreateTaskForm()
     
