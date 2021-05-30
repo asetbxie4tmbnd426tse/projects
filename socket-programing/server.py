@@ -19,12 +19,18 @@ server.bind(ADDR)
 
 def _remove_client_from_list(addr):
     try:
-        for i in range(len(clients_list)):
-            if clients_list[i][addr] == addr:
+        lock.acquire()
+        for i in range(0, len(clients_list)):
+            if clients_list[i]["addr"] == addr:
                 del clients_list[i]
+                lock.release()
                 break
     except:
         pass
+
+def _add_client_to_list(client_info: dict):
+    clients_list.append(client_info)
+
 def send_protocol(msg, conn):
     message = msg.encode(FORMAT)
     msg_length = len(message)
@@ -61,6 +67,7 @@ def recive_protocol(conn, addr):
             message = conn.recv(message_length).decode(FORMAT)
             if message == DISCONNECT_MASSAGE:
                 connected = False
+
             elif message == "Message received":
                 pass
             print(f"[{addr}] {message}")
@@ -88,7 +95,7 @@ def start():
             "conn": conn,
             "addr": addr,
         }
-        clients_list.append(client_info)
+        _add_client_to_list(client_info)
         message_log_to_new_client(conn)
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
