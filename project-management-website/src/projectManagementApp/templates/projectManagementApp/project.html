@@ -11,9 +11,9 @@
             {% for task in tasks %}
                     
                 {% if task.complete  %}
-                    <li><input type="checkbox", value="clicked", name="t{{task.id}}" checked>{{task.title}}</li>
+                    <li><input type="checkbox", value="clicked", name="t{{task.id}}" checked>{{task.title}} <button type="submit", name="deleteT{{task.id}}", value="deleteT{{task.id}}">delete</button></li>
                 {% else %}
-                    <li><input type="checkbox", value="clicked", name="t{{task.id}}">{{task.title}}</li>
+                    <li><input type="checkbox", value="clicked", name="t{{task.id}}">{{task.title}} <button type="submit", name="deleteT{{task.id}}", value="deleteT{{task.id}}">delete</button></li>
                 {% endif %}
 
             {% endfor %}
