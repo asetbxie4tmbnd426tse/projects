@@ -8,7 +8,6 @@ from .forms import CreateProjectForm, CreateTaskForm
 # Create your views here.
 
 def index(request, name):
-    
     if Project.objects.get(name=name).created_by_id == request.user.id:
         tasks = Task.objects.filter(task_of_project_id=name)
         if request.method == "POST":

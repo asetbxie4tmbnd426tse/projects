@@ -2,17 +2,16 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import RegistrationForm
+from .models import createGroup
 
 # Create your views here.
-
-#def log_in(request):
-#    pass
 
 def sign_up(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            createGroup(form.cleaned_data.get("username"))
         return HttpResponseRedirect("/register/successfullSignUp/")
     else:
         form = RegistrationForm()
