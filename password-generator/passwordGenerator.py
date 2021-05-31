@@ -28,3 +28,4 @@ def to_dictionarey(app_name: str, username: str, password: str):
         "username": username,
         "password": password
     }
+    return ret
