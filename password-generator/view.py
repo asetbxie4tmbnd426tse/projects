@@ -16,7 +16,7 @@ def generate_password():
         password_tb.insert(1.0, new_password)
     except:
         pass
-
+#---------------pasword generating part------------------------
 password_lengh_lable = tk.Label(root, text="please specify the lengh of the password without '.' or ',':")
 password_lengh_lable.grid(column=0, row=0)
 
@@ -46,6 +46,7 @@ nums_cb.grid(column=5, row=0)
 symb_cb = tk.Checkbutton(root, text="Include symbols", variable=symb)
 symb_cb.grid(column=5, row=1)
 
+#-----------save file part-------------------------------------
 username_lable = tk.Label(root, text="username:")
 username_lable.grid(column=0, row=3)
 
@@ -69,5 +70,5 @@ app_name_tb.grid(column=1,row=5)
 
 save_button = tk.Button(root, text="Save")
 save_button.grid(column=0, row=6, columnspan=2)
-
+#--------------------------------------------------------------
 root.mainloop()
