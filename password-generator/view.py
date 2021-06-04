@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from tkinter.constants import END
 import passwordGenerator as pg
 
@@ -9,13 +10,19 @@ root.title("password generator")
 root.geometry(f"{width}x{hight}")
 
 
+def error_pop_up(message: str):
+    messagebox.showerror("error",message)
+
+
+
 def generate_password():
     try:
         new_password = pg.generate_password(lengh=int(password_lengh_tb.get(1.0, END)), apper=apper.get(), lower=lower.get(), nums=nums.get(), symb=symb.get())
         password_tb.delete(1.0,"end")
         password_tb.insert(1.0, new_password)
     except:
-        pass
+        error_pop_up("make sure the lengh is a number. It should not include '.' or ',' and you checked at least one of the options to the right.")
+
 #---------------pasword generating part------------------------
 password_lengh_lable = tk.Label(root, text="please specify the lengh of the password without '.' or ',':")
 password_lengh_lable.grid(column=0, row=0)
