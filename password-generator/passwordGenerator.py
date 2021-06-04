@@ -13,7 +13,7 @@ def generate_password(lengh: int, apper=True, lower=True, nums=True, symb=True):
         char_to_use += appercase_letters
     if lower:
         char_to_use += lowercase_letters
-    if digits:
+    if nums:
         char_to_use += digits
     if symb:
         char_to_use += symbols
