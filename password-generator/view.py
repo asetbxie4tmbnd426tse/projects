@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter.constants import END
 import passwordGenerator as pg
 
-width = 800
-hight = 400
+width = 720
+hight = 250
 root = tk.Tk()
 root.title("password generator")
 root.geometry(f"{width}x{hight}")
