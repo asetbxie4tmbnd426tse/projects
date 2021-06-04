@@ -14,7 +14,7 @@ def index(request, name):
         if request.method == "POST":
             if request.POST.get("save"):
                 for task in tasks:
-                    if request.POST.get(f"t{str(task.id)}") == "clicked":
+                    if request.POST.get(f"t{str(task.title)}") == "clicked":
                         task.complete = True
                     else:
                         task.complete = False
@@ -24,8 +24,17 @@ def index(request, name):
 
             elif request.POST.get("newTask"):
                 return HttpResponseRedirect("/createTask/")
+            
+            else:
+                for t in tasks:
+                    if request.POST.get(f"delete{t.title}"):
+                        t.delete()
+                        return HttpResponseRedirect(f"/{name}")
+
+
     else:
         return HttpResponseRedirect("/view_projects/")
+
     context = {
             "project":name,
             "tasks":tasks
@@ -61,8 +70,8 @@ def createTaskView(request):
         form = CreateTaskForm(request.POST)
         if form.is_valid():
             form.save()
-            projectId = Project.objects.get(name=form.cleaned_data["task_of_project"]).id
-            return HttpResponseRedirect(f"/{projectId}") 
+            project_name = Project.objects.get(name=form.cleaned_data["task_of_project"]).name
+            return HttpResponseRedirect(f"/{project_name}") 
     else:
         form = CreateTaskForm()
     
