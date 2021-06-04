@@ -4,4 +4,8 @@ I may add a project or changed (added fittures or modified, or fixed bugs) the e
 
 I added a new folder will hold a password genarator. Already finished the genarator script. I am going to add a GUI and the ability to save the password with a username and the name of the application it will be use for as a JSON file.
 
+updates:
+Added delete option to delete tasks from a project in project management website.
+password generator GUI is still in work. The generating GUI itself is working. Saving option is still in development. 
+
 Thank you for your time, and have a plessent day
