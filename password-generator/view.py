@@ -25,9 +25,13 @@ def generate_password():
     except:
         error_pop_up("make sure the lengh is a number. It should not include '.' or ',' and you checked at least one of the options to the right.")
 
-def open_file_dialog(username: str, email: str, app_name: str) -> str:
-    root.filename = filedialog.askopenfilename()
-    temp = pg.to_dictionarey(app_name=app_name,username=username, password=password_tb.get(1.0, END), email=email)
+def open_file_dialog() -> str:
+    return filedialog.askopenfilename()
+
+def save(username: str, password: str, email: str, app_name: str, notes: str = None):
+    cont = pg.to_dictionarey(app_name=app_name,username=username, password=password, email=email, notes=notes)
+    file_path = open_file_dialog()
+    saj.add(file_path=file_path, cont=cont)
 
 def open_save_window():
     save_window = tk.Toplevel()
@@ -60,7 +64,13 @@ def open_save_window():
     new_file_button = tk.Button(save_window, text="New file")
     new_file_button.grid(column=0, row=7, columnspan=2)
 
-    save_button = tk.Button(save_window, text="Save", command=open_file_dialog)
+    save_button = tk.Button(save_window, text="Save", command= lambda: save(
+        app_name=app_name_tb.get(1.0, END),
+        username=username_tb.get(1.0, END),
+        password=password_tb.get(1.0, END),
+        email=email_tb.get(1.0, END),
+        notes=notes_tb.get(1.0, END)
+        ))
     save_button.grid(column=1, row=7, columnspan=2)
 
 #---------------pasword generating gui part------------------------
@@ -72,10 +82,10 @@ password_lengh_tb = tk.Text(root, height=1, width = 10, bg = "white")
 password_lengh_tb.grid(column=1, row=0)
 
 password_generator_button = tk.Button(root, text="Generate password", command=generate_password)
-password_generator_button.grid(column=0, row=1, columnspan=2)
+password_generator_button.grid(column=0, row=6, columnspan=2)
 
 password_tb = tk.Text(root, height=4, width = 40, bg = "white")
-password_tb.grid(column=0, row=6, columnspan=2)
+password_tb.grid(column=0, row=7, columnspan=2)
 
 apper = tk.BooleanVar()
 lower = tk.BooleanVar()
@@ -97,7 +107,7 @@ symb_cb.grid(column=0, row=5)
 #-----------save file gui part-------------------------------------
 
 save_button = tk.Button(root, text="Save", command=open_save_window)
-save_button.grid(column=0, row=6, columnspan=2)
+save_button.grid(column=0, row=8, columnspan=2)
 
 #-----------------------------------------------------------------
 
