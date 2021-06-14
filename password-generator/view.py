@@ -7,7 +7,7 @@ import saveAsJSON as saj
 import os
 
 
-width = 720
+width = 400
 hight = 250
 root = tk.Tk()
 root.title("password generator")
@@ -50,12 +50,18 @@ def open_save_window():
 
     app_name_tb = tk.Text(save_window, height=1, width = 20, bg = "white")
     app_name_tb.grid(column=1,row=5)
+    
+    notes_lable = tk.Label(save_window, text="notes:")
+    notes_lable.grid(column=0, row=6)
 
-    new_file_button = tk.Button(save_window, text="Create new file")
-    new_file_button.grid(column=0, row=6, columnspan=2)
+    notes_tb = tk.Text(save_window, height=5, width = 20, bg = "white")
+    notes_tb.grid(column=1,row=6)
+
+    new_file_button = tk.Button(save_window, text="New file")
+    new_file_button.grid(column=0, row=7, columnspan=2)
 
     save_button = tk.Button(save_window, text="Save", command=open_file_dialog)
-    save_button.grid(column=1, row=6, columnspan=2)
+    save_button.grid(column=1, row=7, columnspan=2)
 
 #---------------pasword generating gui part------------------------
 
@@ -65,11 +71,11 @@ password_lengh_lable.grid(column=0, row=0)
 password_lengh_tb = tk.Text(root, height=1, width = 10, bg = "white")
 password_lengh_tb.grid(column=1, row=0)
 
-password_tb = tk.Text(root, height=4, width = 40, bg = "white")
-password_tb.grid(column=0, row=2, columnspan=2)
-
 password_generator_button = tk.Button(root, text="Generate password", command=generate_password)
 password_generator_button.grid(column=0, row=1, columnspan=2)
+
+password_tb = tk.Text(root, height=4, width = 40, bg = "white")
+password_tb.grid(column=0, row=6, columnspan=2)
 
 apper = tk.BooleanVar()
 lower = tk.BooleanVar()
@@ -77,16 +83,16 @@ nums = tk.BooleanVar()
 symb = tk.BooleanVar()
 
 apper_cb = tk.Checkbutton(root, text="Include uppercase", variable=apper)
-apper_cb.grid(column=3, row=0)
+apper_cb.grid(column=0, row=2)
 
 lower_cb = tk.Checkbutton(root, text="Include lowercase", variable=lower)
-lower_cb.grid(column=3, row=1)
+lower_cb.grid(column=0, row=3)
 
 nums_cb = tk.Checkbutton(root, text="Include numbers", variable=nums)
-nums_cb.grid(column=5, row=0)
+nums_cb.grid(column=0, row=4)
 
 symb_cb = tk.Checkbutton(root, text="Include symbols", variable=symb)
-symb_cb.grid(column=5, row=1)
+symb_cb.grid(column=0, row=5)
 
 #-----------save file gui part-------------------------------------
 

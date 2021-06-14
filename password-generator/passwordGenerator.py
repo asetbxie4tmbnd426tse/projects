@@ -22,11 +22,12 @@ def generate_password(lengh: int, apper=True, lower=True, nums=True, symb=True):
         password += char_to_use[int(random.randrange(0,len(char_to_use)))]
     return password
 
-def to_dictionarey(app_name: str, username: str, password: str, email: str):
+def to_dictionarey(app_name: str, username: str, password: str, email: str, notes: str = None):
     ret = {
         "app_name": app_name,
         "username": username,
         "password": password,
-        "email": email
+        "email": email,
+        "notes":notes
     }
     return ret
