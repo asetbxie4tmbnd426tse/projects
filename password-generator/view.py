@@ -25,13 +25,23 @@ def generate_password():
     except:
         error_pop_up("make sure the lengh is a number. It should not include '.' or ',' and you checked at least one of the options to the right.")
 
-def open_file_dialog() -> str:
-    return filedialog.askopenfilename()
+def open_file_dialog(dialog_type: str = None) -> str:
+    # the file gets a parameter "dialog_type". if the parameter is 'd' the function will open the 
+    # directory file dialog, else a usual save dialog
+    # and return the directory\file path
+    if dialog_type == 'd':
+        return filedialog.askdirectory()
+    return filedialog.asksaveasfilename()
 
 def save(username: str, password: str, email: str, app_name: str, notes: str = None):
     cont = pg.to_dictionarey(app_name=app_name,username=username, password=password, email=email, notes=notes)
     file_path = open_file_dialog()
     saj.add(file_path=file_path, cont=cont)
+
+def save_new_file(title: str, username: str, password: str, email: str, app_name: str, notes: str = None):
+    cont = pg.to_dictionarey(app_name=app_name,username=username, password=password, email=email, notes=notes)
+    directory_path = open_file_dialog(dialog_type="d")
+    saj.new_file(directory_path, name=title, cont=cont)
 
 def open_save_window():
     save_window = tk.Toplevel()
@@ -61,17 +71,28 @@ def open_save_window():
     notes_tb = tk.Text(save_window, height=5, width = 20, bg = "white")
     notes_tb.grid(column=1,row=6)
 
-    new_file_button = tk.Button(save_window, text="New file")
-    new_file_button.grid(column=0, row=7, columnspan=2)
-
-    save_button = tk.Button(save_window, text="Save", command= lambda: save(
+    new_file_button = tk.Button(save_window, text="New file", command=lambda: save_new_file(
+        title=new_file_tb.get(1.0, END)[0:-1],
         app_name=app_name_tb.get(1.0, END),
         username=username_tb.get(1.0, END),
         password=password_tb.get(1.0, END),
         email=email_tb.get(1.0, END),
         notes=notes_tb.get(1.0, END)
         ))
-    save_button.grid(column=1, row=7, columnspan=2)
+    new_file_button.grid(column=0, row=7)
+
+    new_file_tb = tk.Text(save_window, height=1, width = 20, bg = "white")
+    new_file_tb.insert(END, "File name")
+    new_file_tb.grid(column=1,row=7)
+
+    save_button = tk.Button(save_window, text="Existing file", command= lambda: save(
+        app_name=app_name_tb.get(1.0, END),
+        username=username_tb.get(1.0, END),
+        password=password_tb.get(1.0, END),
+        email=email_tb.get(1.0, END),
+        notes=notes_tb.get(1.0, END)
+        ))
+    save_button.grid(column=0, row=8, columnspan=2)
 
 #---------------pasword generating gui part------------------------
 
