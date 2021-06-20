@@ -2,7 +2,7 @@ Hello,
 If you are an employer you may want to read this.
 I may add a project or changed (added fittures or modified, or fixed bugs) the existing files, and didn't want to resend a new CV.
 
-(15/6/2021) Add a functionale new file saving butten. Need to make a file title validetor.
+(15/6/2021) Add a functionale new file saving butten.
 
 (14/6/2021) Made a functional saving butten. The function can add the new acount details to en existing JSON file. 
 
