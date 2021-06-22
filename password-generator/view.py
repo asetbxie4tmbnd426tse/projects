@@ -7,6 +7,7 @@ import saveAsJSON as saj
 import os
 
 
+INVALID_FILE_NAME_CHARACTERS = ["[", "#", "%", "&", "{", "}", "back slash", "<", ">", "*", "?", "/" ,"blank spaces", "$", "!" ,"'",'"', ":", "@", "+", "`", "|", "="]
 width = 400
 hight = 250
 root = tk.Tk()
@@ -39,6 +40,16 @@ def save(username: str, password: str, email: str, app_name: str, notes: str = N
     saj.add(file_path=file_path, cont=cont)
 
 def save_new_file(title: str, username: str, password: str, email: str, app_name: str, notes: str = None):
+    # the function saves the data to a new file whose name is represented by "title" argument/
+    # the function returns false if the file name (title) has a invalid file name character. 
+    invalid_file_name_massage= """
+    File name must not contain the following characters: "[", "#", "%", "&", "{", "}", "back slash", "<", ">", "*", "?", "/" ,"blank spaces", "$", "!" ," ' ",' " ', ":", "@", "+", "`", "|", "="
+    """
+    for ch in INVALID_FILE_NAME_CHARACTERS:
+        if ch in title:
+            error_pop_up(invalid_file_name_massage)
+            return False
+    
     cont = pg.to_dictionarey(app_name=app_name,username=username, password=password, email=email, notes=notes)
     directory_path = open_file_dialog(dialog_type="d")
     saj.new_file(directory_path, name=title, cont=cont)
